@@ -15,6 +15,9 @@ void Direct3D9::initD3D(HWND hWnd)
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD; // Discard old frames
 	d3dpp.hDeviceWindow = hWnd; // Window used by Direct3D
+	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;    // set the back buffer format to 32-bit
+	d3dpp.BackBufferWidth = SCREEN_WIDTH;    // set the width of the buffer
+	d3dpp.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
 		
 	// Create a device class using this information and information from the d3dpp stuct
 	D3D9->d3d->CreateDevice(

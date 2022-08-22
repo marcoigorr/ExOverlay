@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "d3d.h"
 
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 // Entry point for any windows application
@@ -21,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wc.lpfnWndProc = WndProc;
 	wc.hInstance = hInstance;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	// wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	wc.lpszClassName = L"WindowClass1";
 
 	// Register window class
@@ -33,9 +34,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		L"Hello World",   // title of the window
 		WS_OVERLAPPEDWINDOW,    // window style
 		300,    // x-position of the window
-		300,    // y-position of the window
-		800,    // width of the window
-		600,    // height of the window
+		100,    // y-position of the window
+		SCREEN_WIDTH,    // width of the window
+		SCREEN_HEIGHT,    // height of the window
 		NULL,    // we have no parent window, NULL
 		NULL,    // we aren't using menus, NULL
 		hInstance,    // application handle
