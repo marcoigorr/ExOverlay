@@ -66,7 +66,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	MSG msg;
 
-	// Infinite message loop
+	// Infinite loop
 	while (!(GetAsyncKeyState(VK_END)))
 	{
 		// Check to see if any messages are waiting in the queue
@@ -83,6 +83,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// Render Frame
 		D3D9->renderFrame();
 
+		// -- Menu
 		if (GetAsyncKeyState(VK_INSERT) & 1)
 		{
 			option->bMenu = !option->bMenu;	
