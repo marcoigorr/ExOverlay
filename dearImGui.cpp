@@ -33,8 +33,6 @@ void dearImGUI::render()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	// ImGui::SetNextWindowSize({ 300,  500 });
-
 	// Menu
 	ImGui::Begin("ExOverlay");
 	ImGui::End();

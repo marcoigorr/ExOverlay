@@ -4,7 +4,28 @@
 #include "Option.h"
 #include "dearImGui.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+// Forward declare message handler from imgui_impl_win32.cpp
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
+	switch (msg)
+	{
+	case WM_DESTROY:
+	{
+		// Close the application, send WM_QUIT (0) 
+		PostQuitMessage(0);
+		return 0;
+	} break;
+	}
+
+	// Handle any messages the switch statement didn't
+	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
 
 // Entry point for any windows application
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -45,8 +66,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		WS_POPUP | WS_EX_TOPMOST,    // window style
 		0,    // x-position of the window
 		0,    // y-position of the window
-		SCREEN_WIDTH,    // width of the window
-		SCREEN_HEIGHT,    // height of the window
+		option->SCREEN_WIDTH,    // width of the window
+		option->SCREEN_HEIGHT,    // height of the window
 		NULL,    // we have no parent window, NULL
 		NULL,    // we aren't using menus, NULL
 		hInstance,    // application handle
@@ -80,7 +101,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (msg.message == WM_QUIT)
 			break;
 
-		// Render Frame
+		// Render Frame and ImGui
 		D3D9->renderFrame();
 
 		// -- Menu
@@ -98,26 +119,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// Return this part of the WM_QUIT message to Windows
 	return msg.wParam;
-}
-
-// Forward declare message handler from imgui_impl_win32.cpp
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-// Main message handler
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-		return true;
-
-	switch (msg)
-	{
-		case WM_DESTROY:
-		{
-			// Close the application, send WM_QUIT (0) 
-			PostQuitMessage(0);
-			return 0;
-		} break;
-	}
-
-	// Handle any messages the switch statement didn't
-	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
