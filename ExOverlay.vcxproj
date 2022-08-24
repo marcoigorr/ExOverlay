@@ -135,10 +135,12 @@
   <ItemGroup>
     <ClCompile Include="d3d.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Option.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3d.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Option.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

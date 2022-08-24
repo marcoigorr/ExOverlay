@@ -16,6 +16,9 @@
     <Filter Include="Direct3D">
       <UniqueIdentifier>{83d8ac2a-4d16-4dbe-9337-52e03b4f8eb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Options">
+      <UniqueIdentifier>{ea1cf2a4-5740-4b0b-8a0f-3cf601097dd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,6 +27,9 @@
     <ClCompile Include="d3d.cpp">
       <Filter>Direct3D</Filter>
     </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Options</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -31,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="d3d.h">
       <Filter>Direct3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Options</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

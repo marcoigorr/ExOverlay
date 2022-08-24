@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "d3d.h"
+#include "Option.h"
 
 #define d3d D3D9->d3d
 #define d3ddev D3D9->d3ddev
@@ -45,8 +46,10 @@ void Direct3D9::renderFrame(void)
 	d3ddev->BeginScene();
 
 	// 3D rendering on the back buffer here...
-
-	D3D9->drawText((char*)"Hello World!", 200, 200, 255, 255, 255, 255);
+	if (option->bMenu)
+	{
+		D3D9->drawText((char*)"Hello World!", 200, 200, 255, 255, 255, 255);
+	}
 
 	// End d3d scene
 	d3ddev->EndScene();

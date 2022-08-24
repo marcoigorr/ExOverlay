@@ -1,6 +1,7 @@
 
 #include "framework.h"
 #include "d3d.h"
+#include "Option.h"
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -66,7 +67,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG msg;
 
 	// Infinite message loop
-	while (true)
+	while (!(GetAsyncKeyState(VK_END)))
 	{
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -79,8 +80,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (msg.message == WM_QUIT)
 			break;
 
-		// Render Frame;
-		D3D9->renderFrame();	
+		// Render Frame
+		D3D9->renderFrame();
+
+		if (GetAsyncKeyState(VK_INSERT) & 1)
+		{
+			option->bMenu = !option->bMenu;	
+		}		
 	}	
 
 	// Clean DirectX and COM
