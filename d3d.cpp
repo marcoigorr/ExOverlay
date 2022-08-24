@@ -19,7 +19,7 @@ void Direct3D9::initD3D(HWND hWnd)
 
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD; // Discard old frames
-	d3dpp.hDeviceWindow = hWnd; // Window used by Direct3D
+	d3dpp.hDeviceWindow = hWnd;		// Window used by Direct3D
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;    // set the back buffer format to 32-bit
 	d3dpp.BackBufferWidth = option->SCREEN_WIDTH;    // set the width of the buffer
 	d3dpp.BackBufferHeight = option->SCREEN_HEIGHT;    // set the height of the buffer
@@ -34,7 +34,7 @@ void Direct3D9::initD3D(HWND hWnd)
 		&d3ddev);
 
 	// Font creation
-	D3DXCreateFont(d3ddev, 25, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Comic Sans", &D3D9->font);
+	D3DXCreateFont(d3ddev, 20, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Comic Sans", &D3D9->font);
 
 	// Setup ImGUI
 	dearImGui->initImGui(hWnd, d3ddev);
@@ -51,7 +51,7 @@ void Direct3D9::renderFrame(void)
 	// 3D rendering on the back buffer here...
 	if (option->bMenu)
 	{
-		D3D9->drawText((char*)"Hello World!", 200, 200, 255, 255, 255, 255);
+		D3D9->drawText((char*)"Hello World!", option->SCREEN_WIDTH / 2 - 100, option->SCREEN_HEIGHT / 2 - 100, 255, 255, 255, 255);
 	}
 
 	// End d3d scene

@@ -6,9 +6,13 @@ void dearImGUI::initImGui(HWND hWnd, LPDIRECT3DDEVICE9 d3ddev)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	ImGui::StyleColorsDark();
 
+	ImGuiIO& io = ImGui::GetIO();
+	io.IniFilename = nullptr;
+	io.LogFilename = nullptr;
+	io.WantSaveIniSettings = false;
+
+	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowMinSize = ImVec2(dearImGui->width, dearImGui->height);
 	style.WindowTitleAlign = ImVec2(0.50f, 0.50f); // Title
