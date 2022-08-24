@@ -19,6 +19,9 @@
     <Filter Include="Options">
       <UniqueIdentifier>{ea1cf2a4-5740-4b0b-8a0f-3cf601097dd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\ImGui-imports">
+      <UniqueIdentifier>{9c7acd16-b6a3-49aa-b663-dd04299633ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,6 +33,30 @@
     <ClCompile Include="Option.cpp">
       <Filter>Options</Filter>
     </ClCompile>
+    <ClCompile Include="ImGUI\imgui.cpp">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_demo.cpp">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_draw.cpp">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_impl_dx9.cpp">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_tables.cpp">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_widgets.cpp">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_impl_win32.cpp">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClCompile>
+    <ClCompile Include="dearImGUI.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -40,6 +67,33 @@
     </ClInclude>
     <ClInclude Include="Option.h">
       <Filter>Options</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imconfig.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui_impl_dx9.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui_internal.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_rectpack.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_textedit.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_truetype.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui_impl_win32.h">
+      <Filter>Resource Files\ImGui-imports</Filter>
+    </ClInclude>
+    <ClInclude Include="dearImGUI.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

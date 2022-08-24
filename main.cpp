@@ -2,7 +2,7 @@
 #include "framework.h"
 #include "d3d.h"
 #include "Option.h"
-
+#include "dearImGui.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -10,7 +10,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	// Title
-	WCHAR overlayTitle[50] = L"Overlay";
+	WCHAR overlayTitle[50] = L"ExOverlay";
 
 	// Handle for the window
 	HWND hWnd;
@@ -39,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// Create the window and use the result as the handle
 	hWnd = CreateWindowEx(
-		WS_EX_TRANSPARENT | WS_EX_LAYERED,
+		WS_EX_LAYERED,
 		overlayTitle,    // name of the window class
 		overlayTitle,   // title of the window
 		WS_POPUP | WS_EX_TOPMOST,    // window style
@@ -89,6 +89,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}		
 	}	
 
+	// Clean ImGui
+	dearImGui->cleanImGui();
+
 	// Clean DirectX and COM
 	D3D9->cleanD3D();
 
@@ -96,10 +99,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return msg.wParam;
 }
 
+// Forward declare message handler from imgui_impl_win32.cpp
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // Main message handler
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (message)
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
+	switch (msg)
 	{
 		case WM_DESTROY:
 		{
@@ -110,5 +118,5 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	// Handle any messages the switch statement didn't
-	return DefWindowProc(hWnd, message, wParam, lParam);
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }

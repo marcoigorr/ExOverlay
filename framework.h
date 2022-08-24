@@ -12,5 +12,10 @@
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
+// Dear ImGUI
+#include "ImGUI/imgui.h"
+#include "ImGUI/imgui_impl_win32.h"
+#include "ImGUI/imgui_impl_dx9.h"
+
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1200

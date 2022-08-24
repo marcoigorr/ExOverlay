@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "d3d.h"
 #include "Option.h"
+#include "dearImGui.h"
 
 #define d3d D3D9->d3d
 #define d3ddev D3D9->d3ddev
@@ -35,6 +36,8 @@ void Direct3D9::initD3D(HWND hWnd)
 	// Font creation
 	D3DXCreateFont(d3ddev, 25, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Comic Sans", &D3D9->font);
 
+	// Setup ImGUI
+	dearImGui->initImGui(hWnd, d3ddev);
 }
 
 void Direct3D9::renderFrame(void)
@@ -54,6 +57,12 @@ void Direct3D9::renderFrame(void)
 	// End d3d scene
 	d3ddev->EndScene();
 
+	// Start Dear ImGUI frame
+	if (option->bMenu)
+	{
+		dearImGui->render();
+	}
+
 	// Display created frame
 	d3ddev->Present(NULL, NULL, NULL, NULL);
 }
@@ -63,7 +72,6 @@ void Direct3D9::cleanD3D(void)
 	d3ddev->Release();
 	d3d->Release();	
 }
-
 
 void Direct3D9::drawText(char* label, int x, int y, int a, int r, int g, int b)
 {
