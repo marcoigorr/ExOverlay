@@ -1,10 +1,13 @@
 #include "framework.h"
 #include "d3d.h"
 
+#define d3d D3D9->d3d
+#define d3ddev D3D9->d3ddev
+
 void Direct3D9::initD3D(HWND hWnd)
 {
 	// Create Direct3D interface
-	D3D9->d3d = Direct3DCreate9(D3D_SDK_VERSION);
+	d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
 	// Create a struct to hold various device info
 	D3DPRESENT_PARAMETERS d3dpp;
@@ -20,37 +23,51 @@ void Direct3D9::initD3D(HWND hWnd)
 	d3dpp.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
 		
 	// Create a device class using this information and information from the d3dpp stuct
-	D3D9->d3d->CreateDevice(
+	d3d->CreateDevice(
 		D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
 		hWnd,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		&d3dpp,
-		&D3D9->d3ddev);
+		&d3ddev);
+
+	// Font creation
+	D3DXCreateFont(d3ddev, 25, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Comic Sans", &D3D9->font);
 
 }
 
 void Direct3D9::renderFrame(void)
 {
-	// Clear the window to a deep blue
-	D3D9->d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.f, 0);
+	// Clear the window to black
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, RGB(0,0,0), 1.f, 0);
 
 	// Begin d3d scene
-	D3D9->d3ddev->BeginScene();
+	d3ddev->BeginScene();
 
-	// 3D rendering on the back buffer here
+	// 3D rendering on the back buffer here...
+
+	D3D9->drawText((char*)"Hello World!", 200, 200, 255, 255, 255, 255);
 
 	// End d3d scene
-	D3D9->d3ddev->EndScene();
+	d3ddev->EndScene();
 
 	// Display created frame
-	D3D9->d3ddev->Present(NULL, NULL, NULL, NULL);
+	d3ddev->Present(NULL, NULL, NULL, NULL);
 }
 
 void Direct3D9::cleanD3D(void)
 {
-	D3D9->d3ddev->Release();
-	D3D9->d3d->Release();
+	d3ddev->Release();
+	d3d->Release();	
+}
+
+
+void Direct3D9::drawText(char* label, int x, int y, int a, int r, int g, int b)
+{
+	RECT rect;
+	rect.top = y;
+	rect.left = x;
+	font->DrawTextA(0, label, strlen(label), &rect, DT_NOCLIP, D3DCOLOR_ARGB(a, r, g, b));
 }
 
 Direct3D9* D3D9 = new Direct3D9();

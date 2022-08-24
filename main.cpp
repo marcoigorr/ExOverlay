@@ -8,6 +8,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 // Entry point for any windows application
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	// Title
+	WCHAR overlayTitle[50] = L"Overlay";
+
 	// Handle for the window
 	HWND hWnd;
 	// Struct that holds info for the window class
@@ -17,30 +20,42 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ZeroMemory(&wc, sizeof(wc));
 
 	// Filling needed information
-	wc.cbSize = sizeof(wc);
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = WndProc;
-	wc.hInstance = hInstance;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	// wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.lpszClassName = L"WindowClass1";
+	wc.cbSize =			sizeof(wc);
+	wc.style =			CS_HREDRAW | CS_VREDRAW;
+	wc.lpfnWndProc =	WndProc;
+	wc.cbClsExtra =		0;
+	wc.cbWndExtra =		0;
+	wc.hInstance =		hInstance;
+	wc.hIcon =			0;
+	wc.hCursor =		LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground =	CreateSolidBrush(RGB(0,0,0));
+	wc.lpszMenuName =	overlayTitle;
+	wc.lpszClassName =	overlayTitle;
+	wc.hIconSm =		0;
 
 	// Register window class
 	RegisterClassExW(&wc);
 
 	// Create the window and use the result as the handle
-	hWnd = CreateWindowEx(NULL,
-		L"WindowClass1",    // name of the window class
-		L"Hello World",   // title of the window
-		WS_OVERLAPPEDWINDOW,    // window style
-		300,    // x-position of the window
-		100,    // y-position of the window
+	hWnd = CreateWindowEx(
+		WS_EX_TRANSPARENT | WS_EX_LAYERED,
+		overlayTitle,    // name of the window class
+		overlayTitle,   // title of the window
+		WS_POPUP | WS_EX_TOPMOST,    // window style
+		0,    // x-position of the window
+		0,    // y-position of the window
 		SCREEN_WIDTH,    // width of the window
 		SCREEN_HEIGHT,    // height of the window
 		NULL,    // we have no parent window, NULL
 		NULL,    // we aren't using menus, NULL
 		hInstance,    // application handle
 		NULL);    // used with multiple windows, NULL
+
+	if (!hWnd) 
+		return FALSE;
+
+	// Set the opacity and transparency color key
+	SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 0, LWA_COLORKEY);
 
 	// Display window
 	ShowWindow(hWnd, nCmdShow);
