@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "dearImGUI.h"
 
+#include "Option.h"
+
 
 void dearImGUI::initImGui(HWND hWnd, LPDIRECT3DDEVICE9 d3ddev)
 {
@@ -39,6 +41,10 @@ void dearImGUI::render()
 
 	// Menu
 	ImGui::Begin("ExOverlay");
+
+	ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + 10, ImGui::GetCursorPosY() + 15));
+	ImGui::Checkbox("God Mode", &option->bGodMode);
+
 	ImGui::End();
 
 	ImGui::Render();

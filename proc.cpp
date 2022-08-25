@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "proc.h"
 
-DWORD GetProcId(const wchar_t* procName)
+DWORD Proc::GetProcId(const wchar_t* procName)
 {
 	DWORD procId = 0;
 
@@ -16,17 +16,13 @@ DWORD GetProcId(const wchar_t* procName)
 
 		if (!Process32First(hSnap, &procEntry))
 		{
-			//std::cout << "Failed to retrieve information about the first process." << std::endl;
 			return procId;
 		}
 
 		while (Process32Next(hSnap, &procEntry))
 		{
-			//std::wcout << "\nProcess " << procEntry.th32ProcessID << ": " << procEntry.szExeFile;
-
 			if (!_wcsicmp(procEntry.szExeFile, procName))
 			{
-				//std::cout << " <- Process Found!" << std::endl;
 				procId = procEntry.th32ProcessID;
 				break;
 			}
@@ -36,7 +32,7 @@ DWORD GetProcId(const wchar_t* procName)
 	return procId;
 }
 
-DWORD_PTR GetModuleBaseAddress64(DWORD processID)
+DWORD_PTR Proc::GetModuleBaseAddress64(DWORD processID)
 {
 	DWORD_PTR   baseAddress = 0;
 	HANDLE      hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
@@ -73,6 +69,11 @@ DWORD_PTR GetModuleBaseAddress64(DWORD processID)
 	}
 
 	return baseAddress;
+}
+
+DWORD Proc::getDllModule(LPSTR lpDllName) 
+{
+	// to do with msdn process32first
 }
 
 Proc* proc = new Proc();

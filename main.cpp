@@ -1,9 +1,16 @@
 
 #include "framework.h"
 #include "d3d.h"
-#include "Option.h"
 #include "dearImGui.h"
 
+#include "Option.h"
+#include "mem.h"
+#include "proc.h"
+#include "addresses.h"
+#include "offsets.h"
+
+#define procId proc->procId
+#define hProcess proc->hProcess
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -30,9 +37,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 // Entry point for any windows application
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// Title
-	WCHAR overlayTitle[50] = L"ExOverlay";
+	// Get process Id of the target
+	procId = proc->GetProcId(L"ULTRAKILL.exe");
 
+	if (procId)
+	{
+		// Get Handle to target Process
+		hProcess = OpenProcess(PROCESS_ALL_ACCESS, NULL, procId);
+
+		// Module base address
+		addr->moduleBase = proc->GetModuleBaseAddress64(procId);
+
+ 		addr->unityPlayer = proc->getDllModule((LPSTR)"UnityPlayer.dll");
+	}
+	else
+	{
+		option->exit = true;
+	}
+
+	// Window Title 
+	WCHAR overlayTitle[50] = L"ExOverlay";
 	// Handle for the window
 	HWND hWnd;
 	// Struct that holds info for the window class
@@ -90,6 +114,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// Main loop
 	while (!(GetAsyncKeyState(VK_END)))
 	{
+		//if (exit) break;
+
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -108,8 +134,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (GetAsyncKeyState(VK_INSERT) & 1)
 		{
 			option->bMenu = !option->bMenu;	
-		}		
+		}	
+
+		// Calculate process memory addresses
+		addr->calcAddresses();
+
+		// -- God Mode
+		if (option->bGodMode)
+		{
+			if (addr->Health)
+			{
+				int HP = 100;
+				WriteProcessMemory(hProcess, (BYTE*)addr->Health, &HP, sizeof(HP), nullptr);
+			}
+		}
 	}	
+
+	// Close Handle
+	CloseHandle(hProcess);
 
 	// Clean ImGui
 	dearImGui->cleanImGui();

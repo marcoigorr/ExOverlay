@@ -40,7 +40,7 @@ void Direct3D9::initD3D(HWND hWnd)
 	dearImGui->initImGui(hWnd, d3ddev);
 }
 
-void Direct3D9::renderFrame(void)
+void Direct3D9::renderFrame()
 {
 	// Clear the window to black
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, RGB(0,0,0), 1.f, 0);
@@ -51,7 +51,7 @@ void Direct3D9::renderFrame(void)
 	// 3D rendering on the back buffer here...
 	if (option->bMenu)
 	{
-		D3D9->drawText((char*)"Hello World!", option->SCREEN_WIDTH / 2 - 100, option->SCREEN_HEIGHT / 2 - 100, 255, 255, 255, 255);
+		D3D9->drawText((char*)"ULTRAKILL Process found!", 100, option->SCREEN_HEIGHT - 100, 255, 255, 255, 255);
 	}
 
 	// End d3d scene
