@@ -8,10 +8,13 @@ public:
 	void GetDesktopResolution(int& horizontal, int& vertical);
 
 	bool bMenu;	
+	bool bGodMode;
 
 	// Constructor
 	Option() {
-		this->bMenu = false;
+		this->bMenu =		true;
+		this->bGodMode =	false;
+
 		GetDesktopResolution(this->SCREEN_WIDTH, this->SCREEN_HEIGHT);
 	}
 };

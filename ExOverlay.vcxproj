@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="addresses.cpp" />
     <ClCompile Include="d3d.cpp" />
     <ClCompile Include="dearImGUI.cpp" />
     <ClCompile Include="ImGUI\imgui.cpp" />
@@ -143,9 +144,13 @@
     <ClCompile Include="ImGUI\imgui_tables.cpp" />
     <ClCompile Include="ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mem.cpp" />
+    <ClCompile Include="offsets.cpp" />
     <ClCompile Include="Option.cpp" />
+    <ClCompile Include="proc.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="addresses.h" />
     <ClInclude Include="d3d.h" />
     <ClInclude Include="dearImGUI.h" />
     <ClInclude Include="framework.h" />
@@ -157,7 +162,10 @@
     <ClInclude Include="ImGUI\imstb_rectpack.h" />
     <ClInclude Include="ImGUI\imstb_textedit.h" />
     <ClInclude Include="ImGUI\imstb_truetype.h" />
+    <ClInclude Include="mem.h" />
+    <ClInclude Include="offsets.h" />
     <ClInclude Include="Option.h" />
+    <ClInclude Include="proc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

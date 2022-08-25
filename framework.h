@@ -5,6 +5,9 @@
 #include <windows.h>
 #include <windowsx.h>
 
+#include <TlHelp32.h>
+#include <Psapi.h>
+
 #include <d3d9.h>
 #include <d3dx9.h>
 
@@ -16,3 +19,5 @@
 #include "ImGUI/imgui.h"
 #include "ImGUI/imgui_impl_win32.h"
 #include "ImGUI/imgui_impl_dx9.h"
+
+#include <vector>

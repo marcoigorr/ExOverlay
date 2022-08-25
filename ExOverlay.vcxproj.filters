@@ -16,11 +16,29 @@
     <Filter Include="Direct3D">
       <UniqueIdentifier>{83d8ac2a-4d16-4dbe-9337-52e03b4f8eb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Options">
-      <UniqueIdentifier>{ea1cf2a4-5740-4b0b-8a0f-3cf601097dd7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\ImGui-imports">
       <UniqueIdentifier>{9c7acd16-b6a3-49aa-b663-dd04299633ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack">
+      <UniqueIdentifier>{2a7375e7-fbe4-417a-a6f5-cd976743bdd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack\Options">
+      <UniqueIdentifier>{ea1cf2a4-5740-4b0b-8a0f-3cf601097dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dearImGUI">
+      <UniqueIdentifier>{be966e34-2f46-4db9-8f03-5afe4fdd1b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack\Addresses">
+      <UniqueIdentifier>{dcb3d453-c863-4f81-96e0-75750d3bfe58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack\Offsets">
+      <UniqueIdentifier>{d71feefd-30ae-4663-915e-ccb48b6967b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack\mem">
+      <UniqueIdentifier>{d9a599f5-6eda-432e-b973-c869837d686a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack\proc">
+      <UniqueIdentifier>{6213f21f-4f99-455b-9a45-67fcb4b6e946}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -31,7 +49,7 @@
       <Filter>Direct3D</Filter>
     </ClCompile>
     <ClCompile Include="Option.cpp">
-      <Filter>Options</Filter>
+      <Filter>Hack\Options</Filter>
     </ClCompile>
     <ClCompile Include="ImGUI\imgui.cpp">
       <Filter>Resource Files\ImGui-imports</Filter>
@@ -55,7 +73,19 @@
       <Filter>Resource Files\ImGui-imports</Filter>
     </ClCompile>
     <ClCompile Include="dearImGUI.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>dearImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="offsets.cpp">
+      <Filter>Hack\Offsets</Filter>
+    </ClCompile>
+    <ClCompile Include="addresses.cpp">
+      <Filter>Hack\Addresses</Filter>
+    </ClCompile>
+    <ClCompile Include="mem.cpp">
+      <Filter>Hack\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="proc.cpp">
+      <Filter>Hack\proc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +96,7 @@
       <Filter>Direct3D</Filter>
     </ClInclude>
     <ClInclude Include="Option.h">
-      <Filter>Options</Filter>
+      <Filter>Hack\Options</Filter>
     </ClInclude>
     <ClInclude Include="ImGUI\imconfig.h">
       <Filter>Resource Files\ImGui-imports</Filter>
@@ -93,7 +123,19 @@
       <Filter>Resource Files\ImGui-imports</Filter>
     </ClInclude>
     <ClInclude Include="dearImGUI.h">
-      <Filter>Resource Files</Filter>
+      <Filter>dearImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="offsets.h">
+      <Filter>Hack\Offsets</Filter>
+    </ClInclude>
+    <ClInclude Include="addresses.h">
+      <Filter>Hack\Addresses</Filter>
+    </ClInclude>
+    <ClInclude Include="mem.h">
+      <Filter>Hack\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="proc.h">
+      <Filter>Hack\proc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
