@@ -82,12 +82,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// Display window
 	ShowWindow(hWnd, nCmdShow);
 
-	// Set up and initialize Direct3D
+	// Set up and initialize Direct3D and ImGui
 	D3D9->initD3D(hWnd);
 
 	MSG msg;
 
-	// Infinite loop
+	// Main loop
 	while (!(GetAsyncKeyState(VK_END)))
 	{
 		// Check to see if any messages are waiting in the queue
