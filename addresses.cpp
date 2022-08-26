@@ -7,7 +7,7 @@
 
 void Address::calcAddresses()
 {
-	addr->NextMovement = mem->FindDMAAddyEx(proc->hProcess, addr->unityPlayer, { 0x017AB300 });
+	addr->NextMovement = addr->unityPlayer + 0x017AB300;
 	addr->Health = mem->FindDMAAddyEx(proc->hProcess, addr->NextMovement, offset->Health);
 }
 

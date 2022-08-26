@@ -8,7 +8,7 @@ public:
 
 	DWORD GetProcId(const wchar_t* procName);
 	DWORD_PTR GetModuleBaseAddress64(DWORD processID);
-	DWORD GetDllModule(const wchar_t* module, DWORD procId);
+	DWORD_PTR GetDllModule(const wchar_t* module, DWORD procId);
 
 	Proc() {
 		this->hProcess = 0;
