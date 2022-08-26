@@ -148,6 +148,7 @@
     <ClCompile Include="offsets.cpp" />
     <ClCompile Include="Option.cpp" />
     <ClCompile Include="proc.cpp" />
+    <ClCompile Include="wnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="addresses.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="offsets.h" />
     <ClInclude Include="Option.h" />
     <ClInclude Include="proc.h" />
+    <ClInclude Include="wnd.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

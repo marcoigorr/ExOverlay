@@ -40,6 +40,9 @@
     <Filter Include="Hack\proc">
       <UniqueIdentifier>{6213f21f-4f99-455b-9a45-67fcb4b6e946}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{0d3dc74f-24db-40fd-a459-8370baecc965}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="proc.cpp">
       <Filter>Hack\proc</Filter>
+    </ClCompile>
+    <ClCompile Include="wnd.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="proc.h">
       <Filter>Hack\proc</Filter>
+    </ClInclude>
+    <ClInclude Include="wnd.h">
+      <Filter>Window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

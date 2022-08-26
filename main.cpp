@@ -1,5 +1,6 @@
 
 #include "framework.h"
+#include "wnd.h" // window class
 #include "d3d.h"
 #include "dearImGui.h"
 
@@ -14,7 +15,6 @@
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
@@ -55,59 +55,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		option->exit = true;
 	}
 
-	// Window Title 
-	WCHAR overlayTitle[50] = L"ExOverlay";
-	// Handle for the window
-	HWND hWnd;
-	// Struct that holds info for the window class
-	WNDCLASSEX wc;
+	// Windows fullscreen transparent window creation
+	if (!window->createWnd(hInstance))
+		option->exit = true;
 
-	// Clearing window class for use
-	ZeroMemory(&wc, sizeof(wc));
-
-	// Filling needed information
-	wc.cbSize =			sizeof(wc);
-	wc.style =			CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc =	WndProc;
-	wc.cbClsExtra =		0;
-	wc.cbWndExtra =		0;
-	wc.hInstance =		hInstance;
-	wc.hIcon =			0;
-	wc.hCursor =		LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground =	CreateSolidBrush(RGB(0,0,0));
-	wc.lpszMenuName =	overlayTitle;
-	wc.lpszClassName =	overlayTitle;
-	wc.hIconSm =		0;
-
-	// Register window class
-	RegisterClassExW(&wc);
-
-	// Create the window and use the result as the handle
-	hWnd = CreateWindowEx(
-		WS_EX_LAYERED,
-		overlayTitle,    // name of the window class
-		overlayTitle,   // title of the window
-		WS_POPUP | WS_EX_TOPMOST,    // window style
-		0,    // x-position of the window
-		0,    // y-position of the window
-		option->SCREEN_WIDTH,    // width of the window
-		option->SCREEN_HEIGHT,    // height of the window
-		NULL,    // we have no parent window, NULL
-		NULL,    // we aren't using menus, NULL
-		hInstance,    // application handle
-		NULL);    // used with multiple windows, NULL
-
-	if (!hWnd) 
-		return FALSE;
-
-	// Set the opacity and transparency color key
-	SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 0, LWA_COLORKEY);
-
-	// Display window
-	ShowWindow(hWnd, nCmdShow);
+	// Display created window
+	ShowWindow(window->hWnd, nCmdShow);
 
 	// Set up and initialize Direct3D and ImGui
-	D3D9->initD3D(hWnd);
+	D3D9->initD3D(window->hWnd);
 
 	MSG msg;
 
