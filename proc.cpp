@@ -71,9 +71,32 @@ DWORD_PTR Proc::GetModuleBaseAddress64(DWORD processID)
 	return baseAddress;
 }
 
-DWORD Proc::getDllModule(LPSTR lpDllName) 
+DWORD Proc::GetDllModule(const wchar_t* module, DWORD procId)
 {
-	// to do with msdn process32first
+	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, procId);
+
+	if (hSnap == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+
+	MODULEENTRY32 modEntry;
+	modEntry.dwSize = sizeof(MODULEENTRY32);
+
+	if (!Module32First(hSnap, &modEntry))
+	{	
+		return 0;
+	}
+
+	if (!_wcsicmp(modEntry.szModule, module))
+		return (DWORD)modEntry.modBaseAddr;
+
+	while (Module32Next(hSnap, &modEntry))
+	{
+		if (!_wcsicmp(modEntry.szModule, module))
+			return (DWORD)modEntry.modBaseAddr;
+	}
+
 }
 
 Proc* proc = new Proc();

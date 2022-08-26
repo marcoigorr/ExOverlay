@@ -45,10 +45,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// Get Handle to target Process
 		hProcess = OpenProcess(PROCESS_ALL_ACCESS, NULL, procId);
 
-		// Module base address
-		addr->moduleBase = proc->GetModuleBaseAddress64(procId);
+		// Proc base address
+		addr->moduleBase = (uintptr_t)proc->GetModuleBaseAddress64(procId);
 
- 		addr->unityPlayer = proc->getDllModule((LPSTR)"UnityPlayer.dll");
+ 		addr->unityPlayer = (uintptr_t)proc->GetDllModule(L"UnityPlayer.dll", procId);
 	}
 	else
 	{
@@ -112,10 +112,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG msg;
 
 	// Main loop
-	while (!(GetAsyncKeyState(VK_END)))
+	while ((!(GetAsyncKeyState(VK_END))) && !option->exit)
 	{
-		//if (exit) break;
-
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{

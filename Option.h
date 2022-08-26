@@ -3,21 +3,17 @@
 class Option
 {
 public:
-	bool exit;
+	bool exit = false;
 
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 	void GetDesktopResolution(int& horizontal, int& vertical);
 
-	bool bMenu;	
-	bool bGodMode;
+	bool bMenu = true;	
+	bool bGodMode = false;
 
 	// Constructor
 	Option() {
-		this->exit =		false;
-		this->bMenu =		true;
-		this->bGodMode =	false;
-
 		GetDesktopResolution(this->SCREEN_WIDTH, this->SCREEN_HEIGHT);
 	}
 };
