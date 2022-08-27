@@ -1,6 +1,9 @@
 #include "framework.h"
 #include "mem.h"
 
+#include "proc.h"
+
+
 uintptr_t MEM::FindDMAAddyIn(uintptr_t addr, std::vector<unsigned int> offsets)
 {
 	uintptr_t cAddr = addr;
@@ -27,5 +30,7 @@ uintptr_t MEM::FindDMAAddyEx(HANDLE hProc, uintptr_t ptr, std::vector<unsigned i
 	}
 	return addr;
 }
+
+
 
 MEM* mem = new MEM();

@@ -55,7 +55,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		option->exit = true;
 	}
 
-	// Windows fullscreen transparent window creation
+	// Fullscreen transparent window creation
 	if (!window->createWnd(hInstance))
 		option->exit = true;
 
