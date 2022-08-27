@@ -7,8 +7,12 @@
 
 void Address::calcAddresses()
 {
-	addr->NextMovement = addr->unityPlayer + 0x017AB300;
-	addr->Health = mem->FindDMAAddyEx(proc->hProcess, addr->NextMovement, offset->Health);
+	addr->localPlayer = addr->unityPlayer + 0x017AB300;
+
+	// NewMovement
+	addr->hp =			mem->FindDMAAddyEx(proc->hProcess, addr->localPlayer, offset->hp);
+	addr->walkSpeed =	mem->FindDMAAddyEx(proc->hProcess, addr->localPlayer, offset->walkSpeed);
+	addr->jumpForce =	mem->FindDMAAddyEx(proc->hProcess, addr->localPlayer, offset->jumpForce);
 }
 
 Address* addr = new Address();

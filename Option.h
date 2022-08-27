@@ -10,7 +10,8 @@ public:
 	void GetDesktopResolution(int& horizontal, int& vertical);
 
 	bool bMenu = true;	
-	bool bGodMode = false;
+	bool bGodMode = false, bSpeedHack = false, bBunnyJump = false;
+	float vWalkSpeed = 750.f, vJumpForce = 90.f;
 
 	// Constructor
 	Option() {

@@ -50,7 +50,7 @@ void Direct3D9::renderFrame()
 
 	// 3D rendering on the back buffer here...
 
-	D3D9->drawText((char*)"ULTRAKILL Cheats - marcoigorr!", 100, option->SCREEN_HEIGHT - 100, 255, 255, 255, 255);
+	D3D9->drawText((char*)"ULTRAKILL Cheats - marcoigorr", 100, option->SCREEN_HEIGHT - 100, 255, 255, 255, 255);
 
 	// End d3d scene
 	d3ddev->EndScene();

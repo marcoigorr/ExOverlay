@@ -2,6 +2,9 @@
 #include "dearImGUI.h"
 
 #include "Option.h"
+#include "mem.h"
+#include "proc.h"
+#include "addresses.h"
 
 
 void dearImGUI::initImGui(HWND hWnd, LPDIRECT3DDEVICE9 d3ddev)
@@ -42,8 +45,19 @@ void dearImGUI::render()
 	// Menu
 	ImGui::Begin("ExOverlay");
 
-	ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + 10, ImGui::GetCursorPosY() + 15));
-	ImGui::Checkbox("God Mode", &option->bGodMode);
+	dearImGui->AddCheckBox("God Mode", &option->bGodMode);
+
+	dearImGui->AddCheckBox("Speed Hack", &option->bSpeedHack);
+	if (option->bSpeedHack)
+	{
+		dearImGui->AddSlider<float>("walkSpeed", &option->vWalkSpeed, 750.f, 1337.f);
+	}
+
+	dearImGui->AddCheckBox("Bunny Jump", &option->bBunnyJump);
+	if (option->bBunnyJump)
+	{
+		dearImGui->AddSlider<float>("jumpForce", &option->vJumpForce, 90.f, 200.f);
+	}
 
 	ImGui::End();
 
@@ -57,5 +71,34 @@ void dearImGUI::cleanImGui()
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 }
+
+void dearImGUI::AddCheckBox(const char* title, bool* var)
+{
+	ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + 10, ImGui::GetCursorPos().y + 15));
+	ImGui::Checkbox(title, var);
+}
+
+bool dearImGUI::AddButton(const char* title)
+{
+	ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + 10, ImGui::GetCursorPos().y + 15));
+	return ImGui::Button(title, ImVec2(110.0f, 30.0f));
+}
+
+template <typename T>
+void dearImGUI::AddSlider(const char* label, T* value, T v_min, T v_max)
+{
+	ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + 15, ImGui::GetCursorPosY() + 8));
+
+	if constexpr (std::is_integral_v<T>)
+	{
+		ImGui::SliderInt(label, value, v_min, v_max);
+	}
+
+	if constexpr (std::is_floating_point_v<T>)
+	{
+		ImGui::SliderFloat(label, value, v_min, v_max);
+	}
+}
+
 
 dearImGUI* dearImGui = new dearImGUI();

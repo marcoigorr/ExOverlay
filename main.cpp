@@ -48,6 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// Proc base address
 		addr->moduleBase = (uintptr_t)proc->GetModuleBaseAddress64(procId);
 
+		// UnityPlayer.dll base
  		addr->unityPlayer = (uintptr_t)proc->GetDllModule(L"UnityPlayer.dll", procId);
 	}
 	else
@@ -93,15 +94,39 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// Calculate process memory addresses
 		addr->calcAddresses();
 
-		// -- God Mode
+		// -- GodMode
 		if (option->bGodMode)
 		{
-			if (addr->Health)
-			{
-				int HP = 100;
-				WriteProcessMemory(hProcess, (BYTE*)addr->Health, &HP, sizeof(HP), nullptr);
-			}
+			if (addr->hp)
+				mem->writeMem<int>(hProcess, addr->hp, 420);
 		}
+
+		// -- SpeedHack
+		if (option->bSpeedHack)
+		{
+			if (addr->walkSpeed)
+				mem->writeMem<float>(hProcess, addr->walkSpeed, option->vWalkSpeed);
+		}
+		else
+		{
+			// set def speed
+			if (addr->walkSpeed) 
+				mem->writeMem<float>(hProcess, addr->walkSpeed, 750.f);
+		}
+
+		// -- Bunny Jump
+		if (option->bBunnyJump)
+		{
+			if (addr->jumpForce)
+				mem->writeMem<float>(hProcess, addr->jumpForce, option->vJumpForce);
+		}
+		else
+		{
+			// set def jumpforce
+			if (addr->jumpForce)
+				mem->writeMem<float>(hProcess, addr->jumpForce, 90.f);
+		}
+
 	}	
 
 	// Close Handle
