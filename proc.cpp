@@ -3,7 +3,7 @@
 
 DWORD Proc::GetProcId(const wchar_t* procName)
 {
-	DWORD procId = 0;
+	procId = 0;
 
 	// Get Process snapshot
 	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -96,7 +96,6 @@ DWORD_PTR Proc::GetDllModule(const wchar_t* module, DWORD procId)
 		if (!_wcsicmp(modEntry.szModule, module))
 			return (DWORD_PTR)modEntry.modBaseAddr;
 	}
-
 }
 
 Proc* proc = new Proc();

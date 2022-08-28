@@ -4,6 +4,9 @@
 #include "wnd.h"
 #include "d3d.h"
 
+#include "options.h"
+
+
 void DIG::initImGui()
 {
     IMGUI_CHECKVERSION();
@@ -41,7 +44,9 @@ void DIG::renderImGui()
 
     // Menu
     ImGui::Begin("ExOverlay");
-
+    {
+        AddCheckBox("God Mode", &option->bGodMode);
+    }
     ImGui::End();
 
     ImGui::Render();

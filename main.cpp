@@ -6,6 +6,12 @@
 
 #include "options.h"
 
+#include "mem.h"
+#include "proc.h"
+#include "offsets.h"
+#include "addresses.h"
+
+#define hProcess proc->hProcess
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -29,6 +35,21 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 // Entry point for any windows application
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+    // Get target process Id
+    proc->procId = proc->GetProcId(L"ULTRAKILL.exe");
+
+    if (proc->procId)
+    {
+        // Get handle to process
+        hProcess = OpenProcess(PROCESS_ALL_ACCESS, NULL, proc->procId);
+
+        /* Get Modules base address */
+
+        addr->moduleBase = proc->GetModuleBaseAddress64(proc->procId);
+
+        addr->unityPlayer = proc->GetDllModule(L"UnityPlayer.dll", proc->procId);
+    }
+
     // Fullscreen transparent window creation
     window->CreateWnd(hInstance);
 
@@ -60,6 +81,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         if (GetAsyncKeyState(VK_INSERT) & 1)
         {
             option->bMenu = !option->bMenu;
+        }
+
+        // Calculate target addresses
+        addr->calcAddresses();
+
+        // -- God Mode
+        if (option->bGodMode)
+        {
+            if (addr->Health) 
+                mem->writeMem<int>(hProcess, addr->Health, 420);
         }
     }
 
