@@ -1,15 +1,23 @@
 #pragma once
 
-class dearImGUI
+class DIG
 {
-public:
-	int width = 300;
-	int height = 500;
+private:
+	// ImGui Menu creation
+	void AddCheckBox(const char* title, bool* var);
+	bool AddButton(const char* title);
+	template <typename T>
+	void AddSlider(const char* label, T* value, T v_min, T v_max);
 
-	void initImGui(HWND hWnd, LPDIRECT3DDEVICE9 d3ddev);
-	void render();
+public:
+	// ImGui Settings
+	int width = 400;
+	int height = 600;
+
+	void initImGui();
+	void renderImGui();
 	void cleanImGui();
 };
 
-extern dearImGUI* dearImGui;
+extern DIG* dearImGui;
 

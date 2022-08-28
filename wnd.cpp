@@ -1,57 +1,51 @@
 #include "framework.h"
 #include "wnd.h"
 
-#include "Option.h"
-
-#define wc window->wc
-
-
-// forward declaration of WndProc in main.cpp
-extern LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-bool Window::createWnd(HINSTANCE hInstance)
+// Forward declaration of WndProc in main.cpp
+extern LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+void wnd::CreateWnd(HINSTANCE hInstance)
 {
-	// Clearing window class for use
-	ZeroMemory(&wc, sizeof(wc));
+    WNDCLASSEX wc;
 
-	// Filling needed information
-	wc.cbSize = sizeof(wc);
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = WndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = hInstance;
-	wc.hIcon = 0;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
-	wc.lpszMenuName = overlayTitle;
-	wc.lpszClassName = overlayTitle;
-	wc.hIconSm = 0;
+    // Clearing window class for use
+    ZeroMemory(&wc, sizeof(WNDCLASSEX));
 
-	// Register window class
-	RegisterClassExW(&wc);
+    // Filling needed information
+    wc.cbSize = sizeof(WNDCLASSEX);
+    wc.style = CS_HREDRAW | CS_VREDRAW;
+    wc.lpfnWndProc = WindowProc;
+    wc.hInstance = hInstance;
+    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+    wc.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
+    wc.lpszClassName = L"WindowClass";
 
-	// Create the window and use the result as the handle
-	window->hWnd = CreateWindowEx(
-		WS_EX_LAYERED,
-		window->overlayTitle,    // name of the window class
-		window->overlayTitle,   // title of the window
-		WS_POPUP | WS_EX_TOPMOST,    // window style
-		0,    // x-position of the window
-		0,    // y-position of the window
-		option->SCREEN_WIDTH,    // width of the window
-		option->SCREEN_HEIGHT,    // height of the window
-		NULL,    // we have no parent window, NULL
-		NULL,    // we aren't using menus, NULL
-		hInstance,    // application handle
-		NULL);    // used with multiple windows, NULL
+    // Register window class
+    RegisterClassEx(&wc);
 
-	if (!window->hWnd)
-		return FALSE;
+    // Create the window and use the result as the handle
+    window->hWnd = CreateWindowEx(
+        WS_EX_LAYERED,
+        L"WindowClass",
+        L"ExOverlay",
+        WS_POPUP | WS_EX_TOPMOST,    // fullscreen values
+        0, 0,    // the starting x and y positions should be 0
+        window->SCREEN_WIDTH, window->SCREEN_HEIGHT,    // set the window to 640 x 480
+        NULL,
+        NULL,
+        hInstance,
+        NULL);
 
-	// Set the opacity and transparency color key
-	SetLayeredWindowAttributes(window->hWnd, RGB(0, 0, 0), 0, LWA_COLORKEY);
-
-	return TRUE;
+    // Set the opacity and transparency color key
+    SetLayeredWindowAttributes(window->hWnd, RGB(0, 0, 0), 0, LWA_COLORKEY);
 }
 
-Window* window = new Window();
+void wnd::GetDesktopResolution(int& horizontal, int& vertical)
+{
+    RECT desktop;
+    const HWND hDesktop = GetDesktopWindow();
+    GetWindowRect(hDesktop, &desktop);
+    horizontal = desktop.right;
+    vertical = desktop.bottom;
+}
+
+wnd* window = new wnd();

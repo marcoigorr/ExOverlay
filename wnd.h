@@ -1,13 +1,20 @@
 #pragma once
 
-class Window
+class wnd
 {
 public:
-	WCHAR overlayTitle[50] = L"ExOverlay"; // Window Title 
-	HWND hWnd;		// Handle for the window
-	WNDCLASSEX wc;	// Struct that holds info for the window class
+	HWND hWnd; // Handle for the window
 
-	bool createWnd(HINSTANCE hInstance);
+	int SCREEN_WIDTH = 1920;
+	int SCREEN_HEIGHT = 1080;
+
+	void CreateWnd(HINSTANCE hInstance);
+	void GetDesktopResolution(int& horizontal, int& vertical);
+
+	wnd()
+	{
+		GetDesktopResolution(SCREEN_WIDTH, SCREEN_HEIGHT);
+	}
 };
 
-extern Window* window;
+extern wnd* window;

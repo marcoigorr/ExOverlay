@@ -1,118 +1,74 @@
-
 #include "framework.h"
-#include "wnd.h" // window class
+
+#include "wnd.h"
 #include "d3d.h"
 #include "dearImGui.h"
 
-#include "Option.h"
-#include "mem.h"
-#include "proc.h"
-#include "addresses.h"
-#include "offsets.h"
+#include "options.h"
 
-#define procId proc->procId
-#define hProcess proc->hProcess
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-		return true;
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return true;
 
-	switch (msg)
-	{
-	case WM_DESTROY:
-	{
-		// Close the application, send WM_QUIT (0) 
-		PostQuitMessage(0);
-		return 0;
-	} break;
-	}
+    switch (message)
+    {
+    case WM_DESTROY:
+    {
+        PostQuitMessage(0);
+        return 0;
+    } break;
+    }
 
-	// Handle any messages the switch statement didn't
-	return DefWindowProc(hWnd, msg, wParam, lParam);
+    return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 // Entry point for any windows application
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// Get process Id of the target
-	procId = proc->GetProcId(L"ULTRAKILL.exe");
+    // Fullscreen transparent window creation
+    window->CreateWnd(hInstance);
 
-	if (procId)
-	{
-		// Get Handle to target Process
-		hProcess = OpenProcess(PROCESS_ALL_ACCESS, NULL, procId);
+    // Display created window
+    ShowWindow(window->hWnd, nCmdShow);
 
-		// Proc base address
-		addr->moduleBase = (uintptr_t)proc->GetModuleBaseAddress64(procId);
+    // Set up and initialize Direct3D and ImGui
+    d3d9->initD3D(window->hWnd);
 
- 		addr->unityPlayer = (uintptr_t)proc->GetDllModule(L"UnityPlayer.dll", procId);
-	}
-	else
-	{
-		option->exit = true;
-	}
+    MSG msg;
 
-	// Fullscreen transparent window creation
-	if (!window->createWnd(hInstance))
-		option->exit = true;
+    // Main loop
+    while (!(GetAsyncKeyState(VK_END)))
+    {
+        // Check to see if any messages are waiting in the queue
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
 
-	// Display created window
-	ShowWindow(window->hWnd, nCmdShow);
+        if (msg.message == WM_QUIT)
+            break;
 
-	// Set up and initialize Direct3D and ImGui
-	D3D9->initD3D(window->hWnd);
+        // Render frame and ImGui
+        d3d9->renderFrame();
 
-	MSG msg;
+        // -- Menu
+        if (GetAsyncKeyState(VK_INSERT) & 1)
+        {
+            option->bMenu = !option->bMenu;
+        }
+    }
 
-	// Main loop
-	while ((!(GetAsyncKeyState(VK_END))) && !option->exit)
-	{
-		// Check to see if any messages are waiting in the queue
-		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
+    // Clean ImGui
+    dearImGui->cleanImGui();
 
-		// If the message is WM_QUIT, exit the while loop
-		if (msg.message == WM_QUIT)
-			break;
+    // Clean DirectX and COM
+    d3d9->cleanD3D();
 
-		// Render Frame and ImGui
-		D3D9->renderFrame();
-
-		// -- Menu
-		if (GetAsyncKeyState(VK_INSERT) & 1)
-		{
-			option->bMenu = !option->bMenu;	
-		}	
-
-		// Calculate process memory addresses
-		addr->calcAddresses();
-
-		// -- God Mode
-		if (option->bGodMode)
-		{
-			if (addr->Health)
-			{
-				int HP = 100;
-				WriteProcessMemory(hProcess, (BYTE*)addr->Health, &HP, sizeof(HP), nullptr);
-			}
-		}
-	}	
-
-	// Close Handle
-	CloseHandle(hProcess);
-
-	// Clean ImGui
-	dearImGui->cleanImGui();
-
-	// Clean DirectX and COM
-	D3D9->cleanD3D();
-
-	// Return this part of the WM_QUIT message to Windows
-	return msg.wParam;
+    // Return this part of the WM_QUIT message to Windows
+    return msg.wParam;
 }
