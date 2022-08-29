@@ -45,9 +45,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         /* Get Modules base address */
 
-        addr->moduleBase = proc->GetModuleBaseAddress64(proc->procId);
+        addr->moduleBase = proc->GetModuleBase(L"ULTRAKILL.exe", proc->procId);
 
-        addr->unityPlayer = proc->GetDllModule(L"UnityPlayer.dll", proc->procId);
+        addr->unityPlayer = proc->GetModuleBase(L"UnityPlayer.dll", proc->procId);
     }
 
     // Fullscreen transparent window creation
@@ -89,8 +89,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         // -- God Mode
         if (option->bGodMode)
         {
-            if (addr->Health) 
-                mem->writeMem<int>(hProcess, addr->Health, 420);
+            if (addr->hp) 
+                mem->writeMem<int>(hProcess, addr->hp, 420);
         }
     }
 

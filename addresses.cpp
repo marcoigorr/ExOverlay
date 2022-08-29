@@ -8,7 +8,7 @@
 void Address::calcAddresses()
 {
 	localPlayer = unityPlayer + 0x017AB300;
-	Health = mem->FindDMAAddyEx(proc->hProcess, localPlayer, offset->Health);
+	hp = mem->FindDMAAddyEx(proc->hProcess, localPlayer, offset->hp);
 }
 
 Address* addr = new Address();

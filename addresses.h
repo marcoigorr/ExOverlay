@@ -7,7 +7,7 @@ public:
 	uintptr_t unityPlayer;
 	uintptr_t localPlayer;
 
-	uintptr_t Health;
+	uintptr_t hp;
 
 	void calcAddresses();
 };

@@ -32,10 +32,10 @@ DWORD Proc::GetProcId(const wchar_t* procName)
 	return procId;
 }
 
-DWORD_PTR Proc::GetModuleBaseAddress64(DWORD processID)
+DWORD_PTR Proc::GetModuleBaseAddress64(DWORD procId)
 {
 	DWORD_PTR   baseAddress = 0;
-	HANDLE      hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
+	HANDLE      hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procId);
 	HMODULE*	moduleArray;
 	LPBYTE      moduleArrayBytes;
 	DWORD       bytesRequired;
@@ -71,7 +71,7 @@ DWORD_PTR Proc::GetModuleBaseAddress64(DWORD processID)
 	return baseAddress;
 }
 
-DWORD_PTR Proc::GetDllModule(const wchar_t* module, DWORD procId)
+DWORD_PTR Proc::GetModuleBase(const wchar_t* module, DWORD procId)
 {
 	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, procId);
 
